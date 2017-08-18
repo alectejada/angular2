@@ -1,0 +1,13 @@
+<div class="media">
+  <div class="d-flex mr-3">
+      <img class="image img-thumbnail event-image" [src]='event.imageUrl' alt="" />
+  </div>
+  <div class="media-body">
+    <div>{{event.name}}</div>
+    <div>{{event.ocurrence.startDate}} - {{event.ocurrence.endDate}}</div>
+    <div>{{event.location.city}}</div>
+    <div class="">
+      {{event.description}}
+    </div>
+  </div>
+</div>

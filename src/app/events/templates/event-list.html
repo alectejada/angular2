@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-sm-4">
+    <event-filter></event-filter>
+  </div>
+  <div class="col-sm-8">
+    <ul class="list-group">
+      <li *ngFor="let event of events | async" class="list-group-item">
+        <event-item [event]="event"></event-item>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="new-event-form-wrapper">
+  <form #ef="ngForm" class="" (ngSubmit)="newEvent(ef.value)" autocomplete="off" novalidate>
+    <div class="form-group">
+      <label for="eventName">Event Name:</label>
+      <input #ename="ngModel" required minlength="3" ngModel maxlength="8" class="form-control" type="text" name="name" placeholder="Name of the Event"/>
+      <ev-messages [errors]="ename.errors">
+        <div *evMessage="'required'" [hidden]="ename.pristine">
+          <small class="error form-text">
+            <em>Name is required.</em>
+          </small>
+        </div>
+        <div *evMessage="'minlength'" >
+          <small class="error form-text">
+            <em>Name is too short. Required length is {{ename.errors?.minlength?.requiredLength}}</em>
+          </small>
+        </div>
+        <div *evMessage="'maxlength'" >
+          <small class="error form-text">
+            <em>Name is too Long.</em>
+          </small>
+        </div>
+      </ev-messages>
+    </div>
+    <div ngModelGroup="ocurrence" class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="startDate">Start Date:</label>
+          <div class="input-group">
+            <input class="form-control" name="startDate" placeholder="yyyy-mm-dd" [(ngModel)]="startDate" ngbDatepicker #start="ngbDatepicker">
+            <div class="input-group-addon" (click)="start.toggle()">
+              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="endDate">End Date:</label>
+          <div class="input-group">
+            <input class="form-control" name="endDate" placeholder="yyyy-mm-dd" [(ngModel)]="endDate" ngbDatepicker #end="ngbDatepicker">
+            <div class="input-group-addon" (click)="end.toggle()">
+              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ngModelGroup="location" class="row form-group">
+      <div class="col-12 form-group">
+        <label for="location">Address:</label>
+        <input #eaddress="ngModel" required (ngModel)="address" class="form-control" type="text" name="address" placeholder="Address"/>
+      </div>
+      <div class="col">
+        <label for="location">City</label>
+        <input required (ngModel)="city" class="form-control" type="text" name="city" placeholder="City"/>
+      </div>
+      <div class="col">
+        <label for="location">State:</label>
+        <input required (ngModel)="state" class="form-control" type="text" name="state" placeholder="State"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea required (ngModel)="description" class="form-control" name="description" placeholder="Description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="manager">Manager:</label>
+      <input (ngModel)="manager" class="form-control" type="text" name="manager" placeholder="Manager"/>
+    </div>
+    <div class="form-group">
+      <label for="manager">Image:</label>
+      <ev-file-drop
+        [(files)]= "files"
+        (filesChange)="handleLoadFile($event)"
+        [(fileOver)]="isFileOver">
+        <div class="file-drop-zone" [ngClass]="{ hover: isFileOver }">
+          <div *ngIf="!files || !files[0].isLoaded">
+            Drop an Image
+          </div>
+          <div *ngIf="files && files[0].isLoaded" class="image-preview">
+            <img class="img-responsive" [src]="files[0]?.base64" />
+          </div>
+        </div>
+      </ev-file-drop>
+    </div>
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <input (ngModel)="category" class="form-control" type="text" name="category" placeholder="Category"/>
+    </div>
+    <button [disabled]='ef.form.invalid' class="btn btn-lg btn-primary" type="submit" name="button">Create Event</button>
+  </form>
+</div>
